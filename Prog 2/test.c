@@ -4,93 +4,35 @@
 typedef struct node {
 	int data;
 	struct node *next;
-} nodeType, *nodePtr;
+} nodePtr, *List;
 
-void displayNode(nodePtr list) {
-	while (list != NULL) {
-		printf("%d, ", list->data);
-		list = list->next;
+void printThis(List trav) {
+	printf("Here is your current list: \n");
+	for (; trav != NULL; trav = trav->next) {
+		printf(" %d", trav->data);
 	}
-	printf("\n");
+	printf("\n\n");
 }
 
-void insertFront(nodePtr *list, int num) {
-	nodePtr temp = malloc(sizeof(nodeType));
+void insertLast(List *A, int num) {
+	List *trav;
 
-	temp->data = num;
-	temp->next = *list;
-	*list = temp;
+	for (trav = A; *trav != NULL; trav = &(*trav)->next);
+
+	List new = malloc(sizeof(nodePtr));
+	new->data = num;
+	new->next = NULL;
+	*trav = new;
 }
 
-void insertRear(nodePtr *list, int num) {
-	nodePtr temp = malloc(sizeof(nodeType));
-	nodePtr *curr = list;
-	if (temp != NULL) {
-		temp->data = num;
-		temp->next = NULL;
-		while (*curr != NULL) {
-			curr = &(*curr)->next;
-		}
-		*curr = temp;
-	}
-}
+int main(void) {
+	List head = NULL;
 
-void insertMiddle(nodePtr *list, int num, int pos) {
-}
+	insertLast(&head, 1);
+	insertLast(&head, 2);
+	insertLast(&head, 3);
 
-void insertSorted(nodePtr *list, int num) {
-	nodePtr temp = malloc(sizeof(nodeType));
-	nodePtr curr = *list;
-	nodePtr key = temp->data;
-
-	if (list == NULL || key < curr->data) {
-		insertFront(list, num);
-	} else {
-		while (curr != NULL && curr->next->data < key) {
-			curr = curr->next;
-			temp->next = curr->next;
-			curr->next = temp;
-		}
-		return;
-	}
-}
-
-int main() {
-	nodePtr head = NULL;
-	int num, choice, pos;
-
-	do {
-		printf("1. Insert Front\n");
-		printf("2. Insert Rear\n");
-		printf("3. Insert Middle\n");
-		printf("Enter Choice: ");
-		scanf("%d", &choice);
-
-		switch (choice) {
-			case 1:
-				printf("Enter number to insert: ");
-				scanf("%d", &num);
-				insertFront(&head, num);
-				displayNode(head);
-				break;
-			case 2:
-				printf("Enter number to insert: ");
-				scanf("%d", &num);
-				insertRear(&head, num);
-				displayNode(head);
-				break;
-			case 3:
-				printf("Enter a number to insert: ");
-				scanf("%d", &num);
-				printf("Enter the position: ");
-				scanf("%d", &pos);
-				insertMiddle(&head, num, pos);
-				displayNode(head);
-				break;
-			default:
-				printf("Invalid choice\n");
-		}
-	} while (choice != 3);
+	printThis(head);
 
 	return 0;
 }
