@@ -1,3 +1,4 @@
+// TODO: EDIT AND FIX FUNCTIONS
 #include <stdio.h>
 
 #define MAX 10
@@ -19,7 +20,8 @@ int allocSpace(VirtualHeap *VH);
 void deallocSpace(VirtualHeap *VH, int x);
 void insertLast(VirtualHeap *VH, List *L, int x);
 void insertFirst(VirtualHeap *VH, List *L, int x);
-void deleteLast(VirtualHeap *VH, List *L, int x);
+void deleteFirst(VirtualHeap *VH, List *L);
+void deleteLast(VirtualHeap *VH, List *L);
 
 int main(void) {
 	VirtualHeap VH;
@@ -63,27 +65,39 @@ void insertFirst(VirtualHeap *VH, List *L, int x) {
 }
 
 void insertLast(VirtualHeap *VH, List *L, int x) {
-	int temp = allocSpace(VH);
+	if (VH->avail != -1) {
+		int temp = allocSpace(VH);
 
-	VH->nodes[temp].link = -1;
-	VH->nodes[temp].data = x;
+		if (temp != -1) {
+			VH->nodes[temp].link = -1;
+			VH->nodes[temp].data = x;
 
-	int i;
+			int i;
 
-	for (i = *L; VH->nodes[i].link != -1; i = VH->nodes[i].link);
-	
-	VH->nodes[i].link = temp;
-}
-
-void deleteLast(VirtualHeap *VH, List *L, int x) {
-	int i;
-
-	for (i = *L; VH->nodes[i].link != -1; i = VH->nodes[i].link) {
-		int next = VH->nodes[i].link;
-		if (VH->nodes[next].link = -1) {
-			VH->nodes[i].link = -1;
+			for (i = *L; VH->nodes[i].link != -1; i = VH->nodes[i].link);
+			
+			VH->nodes[i].link = temp;
 		}
 	}
+}
 
-	deallocSpace(VH, i);
+void deleteFirst(VirtualHeap *VH, List *L) {
+	int temp;
+
+	if (*L != -1) {
+		temp = *L;
+		*L = VH->nodes[temp].link;
+		deallocSpace(VH, temp);
+	}
+}
+
+void deleteLast(VirtualHeap *VH, List *L) {
+	if (*L != -1) {
+		int i, j;
+
+		for (i = *L, j = 0; VH->nodes[i].link != -1; j = i, i = VH->nodes[i].link);
+
+		VH->nodes[j].link = -1;
+		deallocSpace(VH, i);
+	}
 }

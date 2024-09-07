@@ -15,7 +15,7 @@ void dequeue(Queue *Q);
 int main(void) {
 	Queue Q;
 
-	initList(&Q);
+	initQueue(&Q);
 	
 	enqueue(1, &Q);
 
