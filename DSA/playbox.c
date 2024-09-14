@@ -1,76 +1,93 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h>
 
-typedef struct node{
-	int data;
-	struct node *next;
-} *List;
+#define MAX 8
 
 typedef struct {
-	List front;
-	List rear;
-} Queue;
+	int arr[MAX];
+	int top;
+} Stack;
 
-void initQueue(Queue *Q);
-void enqueue(int x, Queue *Q);
-void dequeue(Queue *Q);
-void printThis(Queue Q);
+void initStack(Stack *L); //
+void push(Stack *L, int x); //
+void pop(Stack *L); //
+bool isEmpty(Stack L);  //
+bool isFull(Stack L); //
+void print(Stack *L); //
+void insertBottom(Stack *L, int x);
 
 int main(void) {
-	Queue Q;
+	Stack L;
 
-	initQueue(&Q);
+	initStack(&L);
 
-	enqueue(1, &Q);
-	enqueue(2, &Q);
-	enqueue(3, &Q);
+	push(&L, 1);
+	push(&L, 2);
+	push(&L, 3);
+	push(&L, 4);
 
-	printThis(Q);
+	print(&L);
 
-	dequeue(&Q);
+	pop(&L);
 
-	printThis(Q);
+	print(&L);
+
+	insertBottom(&L, 9);
+
+	print(&L);
 
 	return 0;
 }
 
-void initQueue(Queue *Q) {
-	Q->front = NULL;
-	Q->rear = NULL;
+void initStack(Stack *L) {
+	L->top = 0;
 }
 
-void enqueue(int x, Queue *Q) {
-	List temp = (List)malloc(sizeof(struct node));
-	if (temp != NULL) {
-		temp->data = x;
-		temp->next = NULL;
-		if (Q->front == NULL) {
-			Q->front = temp;
-		} else {
-			Q->rear->next = temp;
-		}
-		Q->rear = temp;
+void push(Stack *L, int x) {
+	if (L->top < MAX) {
+		L->arr[L->top] = x;
+		L->top++;
 	}
 }
 
-void dequeue(Queue *Q) {
-	if (Q->front != NULL) {	
-		List temp;
-		temp = Q->front;
-		Q->front = temp->next;
-
-		free(temp);
-
-		if (Q->front == NULL) {
-			Q->rear = NULL;
-		}
-	}
+void pop(Stack *L) {
+	if (L->top != 0) L->top--;
 }
 
-void printThis(Queue Q) {
-	while (Q.front != NULL) {
-		printf(" %d", Q.front->data);
-		Q.front = Q.front->next;
+bool isEmpty(Stack L) {
+	return (L.top == 0) ? 1 : 0;
+}
+
+bool isFull(Stack L) {
+	return (L.top == MAX) ? 1 : 0;
+}
+
+void print(Stack *L) {
+	for (int i = 0; i < L->top; i++) {
+		printf("%d ", L->arr[i]);
 	}
 	printf("\n");
+}
+
+void insertBottom(Stack *L, int x) {
+	if (isEmpty(*L)) {
+		push(L, x);
+	} 
+	else if (!(isFull(*L))) {
+		Stack A;
+
+		initStack(&A);
+
+		while (!(isEmpty(*L))) {
+			push(&A, L->arr[L->top - 1]);
+			pop(L);
+		}
+
+		push(L, x);
+
+		while (!(isEmpty(A))) {
+			push(L, A.arr[A.top - 1]);
+			pop(&A);
+		}
+	}
 }
