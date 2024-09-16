@@ -30,35 +30,33 @@ int main(void) {
 
 	displayList(L);
 
-	printf("\n");
-
-	printf("Insert Sorted: ");
+	printf("\nInsert Sorted: ");
 
 	insertSorted(&L, 3);
 
 	displayList(L);
 
-	printf("\n");
-
-	printf("Delete First: ");
+	printf("\nDelete First: ");
 
 	deleteFirst(&L);
 
 	displayList(L);
 
-	printf("\n");
-
-	printf("Insert First: ");
+	printf("\nInsert First: ");
 
 	insertFirst(&L, 1);
 
 	displayList(L);
 
-	printf("\n");
-
-	printf("Delete Data: ");
+	printf("\nDelete Data: ");
 
 	deleteData(&L, 5);
+
+	displayList(L);
+
+	deleteLast(&L);
+
+	printf("\nDelete Last: ");
 
 	displayList(L);
 
@@ -119,6 +117,13 @@ void deleteData(List *L, int x) {
 		*trav = temp->next;
 		free(temp);
 	}
+}
+
+void deleteLast(List *L) {
+	List *trav;
+	for (trav = L; (*trav)->next != NULL; trav = &(*trav)->next);
+	free(*trav);
+	*trav = NULL;
 }
 
 void displayList(List L) {

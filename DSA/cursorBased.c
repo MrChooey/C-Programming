@@ -33,9 +33,9 @@ int main(void) {
 }
 
 void initHeap(VirtualHeap *VH) {
-	VH->avail = 0;
-	for (int i = -1; i < MAX - 1; i++) {
-		VH->nodes[i + 1].link = i;
+	VH->avail = MAX - 1;
+	for (int i = 0; i < MAX; i++) {
+		VH->nodes[i].link = i - 1;
 	}
 }
 
