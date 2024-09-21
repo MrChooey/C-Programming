@@ -20,6 +20,7 @@ void deallocSpace(VirtualHeap *VH, int x);
 void push(VirtualHeap *VH, List *L, int x);
 void pop(VirtualHeap *VH, List *L);
 void print(VirtualHeap VH, List L);
+void insertSorted(VirtualHeap *VH, List *L, int x);
 
 int main(void) {
 	VirtualHeap VH;
@@ -29,10 +30,10 @@ int main(void) {
 
 	push(&VH, &L, 1);
 	push(&VH, &L, 2);
-	push(&VH, &L, 3);
 	push(&VH, &L, 4);
 	push(&VH, &L, 5);
 	push(&VH, &L, 6);
+	push(&VH, &L, 7);
 
 	printf("Pushed Elements: ");
 	print(VH, L);
@@ -42,6 +43,11 @@ int main(void) {
 	pop(&VH, &L);
 
 	printf("\nPopped Elements: ");
+	print(VH, L);
+
+	insertSorted(&VH, &L, 3);
+
+	printf("\nInsert Sorted Elements: ");
 	print(VH, L);
 
 	return 0;
@@ -88,5 +94,21 @@ void print(VirtualHeap VH, List L) {
 	int trav;
 	for (trav = L; trav != -1; trav = VH.nodes[trav].next) {
 		printf("%d ", VH.nodes[trav].data);
+	}
+}
+
+void insertSorted(VirtualHeap *VH, List *L, int x) {
+	List dummy = -1;
+
+	while ((*L) != -1 && VH->nodes[(*L)].data > x) {
+		push(VH, &dummy, VH->nodes[(*L)].data);
+		pop(VH, L);
+	}
+
+	push(VH, L, x);
+
+	while (dummy != -1) {
+		push(VH, L, VH->nodes[dummy].data);
+		pop(VH, &dummy);
 	}
 }
