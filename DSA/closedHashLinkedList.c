@@ -15,7 +15,7 @@ void initDict(Dictionary A);
 int hash(int data);
 void insert(Dictionary A, int data);
 void delete(Dictionary A, int data);
-bool inDict(Dictionary A, int data);
+bool member(Dictionary A, int data);
 void printDict(Dictionary A);
 
 int main(void) {
