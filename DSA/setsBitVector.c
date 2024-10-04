@@ -91,7 +91,7 @@ void printSet(Set A) {
 }
 
 Set *unionSet(Set A, Set B) {
-	Set *U = malloc(sizeof(Set));
+	Set *U = (Set*)malloc(sizeof(Set));
 
 	initSet(*U);
 

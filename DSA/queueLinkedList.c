@@ -46,9 +46,8 @@ void enqueue(int x, Queue *Q) {
 		temp->next = NULL;
 		if (Q->front == NULL) {
 			Q->front = temp;
-		} else {
-			Q->rear->next = temp;
 		}
+		Q->rear->next = temp;
 		Q->rear = temp;
 	}
 }

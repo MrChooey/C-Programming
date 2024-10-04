@@ -8,6 +8,7 @@ void initSet(Set *A);
 void insert(Set *A, int x);
 void delete(Set *A, int x);
 void displayBitPattern(Set A);
+void displayElems(Set A);
 Set unionSet(Set A, Set B);
 Set intersection(Set A, Set B);
 Set difference(Set A, Set B);
@@ -28,6 +29,10 @@ int main(void) {
 	insert(&A, 23);
 	insert(&A, 31);
 
+	printf("Elements of Set A: { ");
+	displayElems(A);
+	printf("}\n");
+
 	printf("Set A Bit Pattern: ");
 	displayBitPattern(A);
 
@@ -47,6 +52,10 @@ int main(void) {
 	insert(&B, 22);
 	insert(&B, 24);
 	insert(&B, 30);
+
+	printf("Elements of Set B: { ");
+	displayElems(B);
+	printf("}\n");
 
 	printf("Set B Bit Pattern: ");
 	displayBitPattern(B);
@@ -80,10 +89,20 @@ void delete(Set *A, int x) {
 
 void displayBitPattern(Set A) {
 	Set mask = 1 << (MAX - 1);
-	for (; mask != 0; mask = mask >> 1) {
+	for (; mask != 0; mask >>= 1) {
 		printf("%d ", (A & mask) ? 1 : 0);
 	}
 	printf("\n\n");
+}
+
+void displayElems(Set A) {
+	Set mask = 1;
+	Set stop = 1 << (MAX - 1);
+	for (int i = 0; mask != stop; mask <<= 1, i++) {
+		if ((A & mask) > 0) {
+			printf("%d ", i);
+		}
+	}
 }
 
 Set unionSet(Set A, Set B) {

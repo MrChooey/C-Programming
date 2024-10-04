@@ -17,6 +17,7 @@ void insert(Dictionary A, int data);
 void delete(Dictionary A, int data);
 bool isMember(Dictionary A, int data);
 void printDict(Dictionary A);
+int searchLength(Dictionary A);
 
 int main(void) {
 	Dictionary D;
