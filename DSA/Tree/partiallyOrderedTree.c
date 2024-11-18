@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#define MAX 10
+#define MAX 5
 
 typedef struct {
 	int elements[MAX];
@@ -12,7 +12,7 @@ void initTree(Tree *T);
 void insertTree(Tree *T, int data);
 void deleteMin(Tree *T);
 void maxHeapify(Tree *T, int size, int parent);
-void heapSort(Tree *T, int size);
+void heapSort(Tree *T);
 
 int main(void) {
 	
@@ -40,7 +40,7 @@ void insertTree(Tree *T, int data) {
 	}
 }
 
-void deleteMin(Tree *T) {
+void deleteMax(Tree *T) {
 	int temp = -1;
 	if (T->lastIndx >= 0) {
 		temp = 
@@ -60,7 +60,7 @@ void maxHeapify(Tree *T, int size, int parent) {
 	}
 
 	if (largest != parent) {
-		int temp = T->elements[largest];
+		int temp = T->elements[largest];	
 		T->elements[largest] = T->elements[parent];
 		T->elements[parent] = temp;
 
@@ -68,9 +68,9 @@ void maxHeapify(Tree *T, int size, int parent) {
 	}
 }
 
-void heapSort(Tree *T, int size) {
-	for (int i = (size - 1) / 2; i >= 0; i--) {
-		maxHeapify(T, size, i);
+void heapSort(Tree *T) {
+	for (int i = (T->lastIndx - 1) / 2; i >= 0; i--) {
+		maxHeapify(T, T->lastIndx, i);
 	}
 
 	for (int i = T->lastIndx; i > -1; i--) {
