@@ -10,7 +10,7 @@ typedef struct {
 
 void initTree(Tree *T);
 void insertTree(Tree *T, int data);
-void deleteMin(Tree *T);
+void deleteMax(Tree *T);
 void maxHeapify(Tree *T, int size, int parent);
 void heapSort(Tree *T);
 
