@@ -106,7 +106,7 @@ void deleteTree(Tree *T, int data) {
 }
 
 bool isFound(Tree *T, int data) {
-	if (T != NULL && (*T)->data != data) {
+	while (T != NULL && (*T)->data != data) {
 		T = ((*T)->data > data) ? (*T)->left : (*T)->right;
 	}
 

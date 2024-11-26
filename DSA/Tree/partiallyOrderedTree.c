@@ -40,10 +40,28 @@ void insertTree(Tree *T, int data) {
 	}
 }
 
-void deleteMax(Tree *T) {
+void deleteTree(Tree *T) {
 	int temp = -1;
 	if (T->lastIndx >= 0) {
-		temp = 
+		temp = T->elements[0];
+		int data = T->elements[T->lastIndx];
+
+		int parent = 0;
+		int left = parent * 2 + 1;
+		int right = left + 1;
+
+		int child = (T->elements[left] < T->elements[right]) ? left : right;
+
+		while (child > 0 && T->elements[child] < data) {
+			T->elements[parent] = T->elements[child];
+
+			parent = child;
+			left = parent * 2 + 1;
+			right = left + 1;
+
+			child = (T->elements[left] < T->elements[right]) ? left : right;
+		}
+		T->elements[child] = data;
 	}
 }
 
